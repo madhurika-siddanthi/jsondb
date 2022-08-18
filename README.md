@@ -1,133 +1,19 @@
-# netbeanssamplecode
-netbeanssamplecode
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Vertical (basic) form</h2>
-            <form id="empForm" method="post">
-                <div class="form-group">
-                    <span><label for="empId">Employee ID:</label> <label id="empIdMsg">
-                        </label></span>
-                    <input type="text" class="form-control" name="empId" id="empId"
-                           placeholder="Enter Employee ID" required>
-                </div>
-                <div class="form-group">
-                    <label for="empName">Employee Name:</label>
-                    <input type="text" class="form-control" id="empName"
-                           placeholder="Enter Employee Name" name="empName">
-                </div>
-                <div class="form-group">
-                    <label for="empEmail">Email:</label>
-                    <input type="email" class="form-control" id="empEmail"
-                           placeholder="Enter Employee Email" name="empEmail">
-                </div>
-                <input type="button" class="btn btn-primary" id="empSave" value="Save"
-                       onclick="saveEmployee();">
-            </form> 
-        </div>
-        <script>
-            //This method validates form and get data
-            function validateAndGetFormData() {
-                var empIdVar = $("#empId").val();
-                if (empIdVar === "") {
-                    alert("Employee ID Required Value");
-                    $("#empId").focus();
-                    return "";
-                }
-                var empNameVar = $("#empName").val();
-                if (empNameVar === "") {
-                    alert("Employee Name is Required Value");
-                    $("#empName").focus();
-                    return "";
-                }
-                var empEmailVar = $("#empEmail").val();
-                if (empEmailVar === "") {
-                    alert("Employee Email is Required Value");
-                    $("#empEmail").focus();
-                    return "";
-                }
-                var jsonStrObj = {
-                    empId: empIdVar,
-                    empName: empNameVar,
-                    empEmail: empEmailVar,
-                };
-                return JSON.stringify(jsonStrObj);
-            }
+# JsonPowerDB 
+### You can fork it. But before that, please give a star (It's totally free).
 
+[Documentation Link](http://login2explore.com/jpdb/docs.html)
 
-            // This method is used to create PUT Json request.
-            function createPUTRequest(connToken, jsonObj, dbName, relName) {
-                var putRequest = "{\n"
-                        + "\"token\" : \""
-                        + connToken
-                        + "\","
-                        + "\"dbName\": \""
-                        + dbName
-                        + "\",\n" + "\"cmd\" : \"PUT\",\n"
-                        + "\"rel\" : \""
-                        + relName + "\","
-                        + "\"jsonStr\": \n"
-                        + jsonObj
-                        + "\n"
-                        + "}";
-                return putRequest;
-            }
+## "This project is all about basics of JsonPowerDB (JPDB) and how to use JPDB for CRUD operations." 
+### If you want to make changes in this repo, then create a PR. I will be happy to add more into it. Thanks.!
+### About JsonPowerDB:
 
+- JsonPowerDB is a Real-time, High Performance, Lightweight and Simple to Use, Rest API based Multi-mode DBMS. JsonPowerDB has ready to use API for Json document DB, RDBMS, Key-value DB, GeoSpatial DB and Time Series DB functionality. JPDB supports and advocates for true serverless and pluggable API development.
 
-            function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) {
-                var url = dbBaseUrl + apiEndPointUrl;
-                var jsonObj;
-                $.post(url, reqString, function (result) {
-                    jsonObj = JSON.parse(result);
-                }).fail(function (result) {
-                    var dataJsonObj = result.responseText;
-                    jsonObj = JSON.parse(dataJsonObj);
-                });
-                return jsonObj;
-            }
-            function resetForm() {
-                $("#empId").val("")
-                $("#empName").val("");
-                $("#empEmail").val("");
-                $("#empId").focus();
-            }
+### Benefits of using JsonPowerDB
 
-            function saveEmployee() {
-                //validate form data
-                //create JPDB request string-token,dbname,rel name...
-                //execute this request
-                //Reset the form data
-                var jsonStr = validateAndGetFormData();
-                if (jsonStr === "") {
-                    return;
-                }
-                var putReqStr = createPUTRequest("90937504|-31949291555579041|90942898",
-                        jsonStr, "sample", "Emp-Rel1");
-                alert(putReqStr);
-                jQuery.ajaxSetup({async: false});
-                var resultObj = executeCommand(putReqStr, "http://api.login2xplore.com:5577", "/api/iml");
-                alert(JSON.stringify(resultObj));
-                jQuery.ajaxSetup({async: "true"});
+- Simplest way to retrieve data in a JSON format.
+- Schema-free, Simple to use, Nimble and In-Memory database.
+- It is built on top of one of the fastest and real-time data indexing engine - PowerIndeX.
+- It is low level (raw) form of data and is also human readable.
+- It helps developers in faster coding, in-turn reduces development cost.
 
-                resetForm();
-            }
-        </script>
-    </body>
-</html>
