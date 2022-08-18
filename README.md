@@ -43,6 +43,7 @@ and open the template in the editor.
             </form> 
         </div>
         <script>
+            //This method validates form and get data
             function validateAndGetFormData() {
                 var empIdVar = $("#empId").val();
                 if (empIdVar === "") {
